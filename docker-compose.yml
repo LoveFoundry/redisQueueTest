@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  redis:
+    build:
+      context: ./redis
+    container_name: q_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+  app:
+    build:
+      context: ./redisQueue
+    container_name: q_app
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      PORT: "8080"
+      REDIS_ADDR: "redis:6379"
+      QUEUE_KEY: "queue:messages"
+      MAXLEN: "50"
+    ports:
+      - "8080:8080"
+volumes:
+  redis-data:
