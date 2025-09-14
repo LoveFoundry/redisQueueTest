@@ -25,10 +25,10 @@ services:
         condition: service_healthy
     restart: unless-stopped
     environment:
-      PORT: "8080"
+      PORT: ":8080"
       REDIS_ADDR: "redis:6379"
       QUEUE_KEY: "queue:messages"
-      MAXLEN: "50"
+      MAXLEN: "30"
     ports:
       - "8080:8080"
 volumes:

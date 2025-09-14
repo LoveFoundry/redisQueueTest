@@ -20,10 +20,4 @@ USER nonroot:nonroot
 
 EXPOSE 8080
 
-
-ENV REDIS_ADDR=redis:6379 \
-    QUEUE_KEY=queue:messages \
-    MAXLEN=50 \
-    PORT=8080
-
 ENTRYPOINT ["/app/app"]

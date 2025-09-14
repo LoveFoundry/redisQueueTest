@@ -32,7 +32,6 @@ func (app *RestApp) MustRun() {
 }
 
 func (app *RestApp) Run() error {
-	log.Printf("asdfasdf %s", app.port)
 	r := app.server.ConfigureRoutes()
 	http.Handle("/", cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
@@ -43,7 +42,7 @@ func (app *RestApp) Run() error {
 
 	go func() {
 		if err := http.ListenAndServe(app.port, nil); err != nil {
-			log.Printf("Rest rest listening on port %s", app.port)
+			log.Printf("rest server is broken on port %s", err)
 		}
 	}()
 	return nil
